@@ -29,8 +29,11 @@ class SecurePlant:
             self.__age = age
             print(f"Age updated: {age} days [OK]")
 
-    def get_info(self):
-        return f"{self.name} ({self.__height}cm, {self.__age} days)"
+    def get_height(self):
+        return self.__height
+
+    def get_age(self):
+        return self.__age
 
 
 if __name__ == "__main__":
@@ -40,4 +43,7 @@ if __name__ == "__main__":
 
     plant.set_height(-5)
 
-    print("Current plant:", plant.get_info())
+    print(
+        f"Current plant: {plant.name} "
+        f"({plant.get_height()}cm, {plant.get_age()} days)"
+    )

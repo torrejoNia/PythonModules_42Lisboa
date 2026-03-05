@@ -13,6 +13,6 @@ if __name__ == "__main__":
     plants = [plant1, plant2, plant3]
 
     print("=== Garden Plant Registry ===")
-    for i in range(len(plants)):
+    for i in range(3):
         plant = plants[i]
         print(f"{plant.name}: {plant.height}cm, {plant.age} days old")

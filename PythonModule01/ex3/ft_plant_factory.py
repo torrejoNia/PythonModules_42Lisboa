@@ -9,7 +9,6 @@ class Plant:
 
 
 if __name__ == "__main__":
-    # Streamlined creation
     plant_data = [
         ("Rose", 25, 30),
         ("Oak", 200, 365),
@@ -19,16 +18,18 @@ if __name__ == "__main__":
     ]
 
     plants = []
+    count = 0
 
-    # Create plants
-    for i in range(len(plant_data)):
+    for i in range(5):
         name, height, age = plant_data[i]
         plant = Plant(name, height, age)
         plants.append(plant)
+        count += 1
 
     print("=== Plant Factory Output ===")
 
-    for i in range(len(plants)):
+    for i in range(5):
         print(f"Created: {plants[i].get_info()}")
 
-    print("Total plants created:", len(plants))
+    print()
+    print("Total plants created:", count)
