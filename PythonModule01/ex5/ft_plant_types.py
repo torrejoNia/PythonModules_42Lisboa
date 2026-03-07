@@ -8,7 +8,7 @@ class Plant:
         return f"{self.name}: {self.height}cm, {self.age} days"
 
     def special_action(self):
-        pass  # default behavior
+        pass
 
 
 class Flower(Plant):
@@ -24,9 +24,12 @@ class Flower(Plant):
             f"{self.color} color"
         )
 
-    def special_action(self):
+    def bloom(self):
         print(f"{self.name} is blooming beautifully!")
         print()
+
+    def special_action(self):
+        self.bloom()
 
 
 class Tree(Plant):
@@ -42,10 +45,13 @@ class Tree(Plant):
             f"{self.trunk_diameter}cm diameter"
         )
 
-    def special_action(self):
-        shade = self.trunk_diameter + 28  # simple formula to get 78 for 50
+    def produce_shade(self):
+        shade = self.trunk_diameter + 28
         print(f"{self.name} provides {shade} square meters of shade")
         print()
+
+    def special_action(self):
+        self.produce_shade()
 
 
 class Vegetable(Plant):

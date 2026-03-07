@@ -6,9 +6,13 @@ class Plant:
     def grow(self):
         self.height += 1
         print(f"{self.name} grew 1cm")
+        return 1
 
     def get_info(self):
         return f"{self.name}: {self.height}cm"
+
+    def get_type(self):
+        return "regular"
 
 
 class FloweringPlant(Plant):
@@ -21,6 +25,9 @@ class FloweringPlant(Plant):
             f"{self.name}: {self.height}cm, "
             f"{self.color} flowers (blooming)"
         )
+
+    def get_type(self):
+        return "flowering"
 
 
 class PrizeFlower(FloweringPlant):
@@ -35,10 +42,13 @@ class PrizeFlower(FloweringPlant):
             f"Prize points: {self.prize_points}"
         )
 
+    def get_type(self):
+        return "prize"
+
 
 class GardenManager:
 
-    total_gardens = 0  # class-level tracking
+    total_gardens = 0  # class-level variable
 
     class GardenStats:
         def __init__(self):
@@ -72,25 +82,27 @@ class GardenManager:
     # Instance method
     def help_plants_grow(self):
         print(f"{self.owner} is helping all plants grow...")
-        for i in range(len(self.plants)):
-            self.plants[i].grow()
-            self.stats.record_growth(1)
+        for plant in self.plants:
+            growth = plant.grow()
+            self.stats.record_growth(growth)
 
     # Instance method
     def garden_report(self):
         print(f"=== {self.owner}'s Garden Report ===")
         print("Plants in garden:")
+
         regular = 0
         flowering = 0
         prize = 0
 
-        for i in range(len(self.plants)):
-            plant = self.plants[i]
+        for plant in self.plants:
             print(f"- {plant.get_info()}")
 
-            if isinstance(plant, PrizeFlower):
+            plant_type = plant.get_type()
+
+            if plant_type == "prize":
                 prize += 1
-            elif isinstance(plant, FloweringPlant):
+            elif plant_type == "flowering":
                 flowering += 1
             else:
                 regular += 1
@@ -100,13 +112,14 @@ class GardenManager:
             f"Plant types: {regular} regular, "
             f"{flowering} flowering, {prize} prize flowers"
         )
+        print()
 
     # Class method
     @classmethod
     def create_garden_network(cls, owner_names):
         gardens = []
-        for i in range(len(owner_names)):
-            gardens.append(cls(owner_names[i]))
+        for owner in owner_names:
+            gardens.append(cls(owner))
         return gardens
 
     # Static method (utility)
@@ -118,14 +131,15 @@ class GardenManager:
 # Utility function (still inside system file, not scattered)
 def calculate_garden_score(garden):
     total = 0
-    for i in range(len(garden.plants)):
-        total += garden.plants[i].height
+    for plant in garden.plants:
+        total += plant.height
     return total
 
 
 if __name__ == "__main__":
 
     print("=== Garden Management System Demo ===")
+    print()
 
     # Create network of gardens
     gardens = GardenManager.create_garden_network(["Alice", "Bob"])
@@ -141,9 +155,11 @@ if __name__ == "__main__":
     alice.add_plant(oak)
     alice.add_plant(rose)
     alice.add_plant(sunflower)
+    print()
 
     # Grow plants
     alice.help_plants_grow()
+    print()
 
     # Report
     alice.garden_report()
