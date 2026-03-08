@@ -1,16 +1,6 @@
 #!/usr/bin/env python3
 
 
-X = "\033[0m"
-R = "\033[91m"
-G = "\033[92m"
-B = "\033[94m"
-C = "\033[96m"
-M = "\033[95m"
-Y = "\033[93m"
-D = "\033[2m"
-
-
 class GardenError(Exception):
     pass
 
@@ -39,36 +29,35 @@ def test_water(water):
 
 def test_errors():
     try:
-        print(f"{D}\nTesting PlantError...{X}")
+        print("\nTesting PlantError...")
         test_moisture(0)
-    except PlantError as e:
-        print(f"{R}Caught PlantError: {str(e)}{X}")
+    except PlantError as error_message:
+        print(f"Caught PlantError: {error_message}")
 
     try:
-        print(f"{D}\nTesting WaterError...{X}")
+        print(f"\nTesting WaterError...")
         test_water(0)
-    except WaterError as e:
-        print(f"{R}Caught WaterError: {str(e)}{X}")
+    except WaterError as error_message:
+        print(f"Caught WaterError: {error_message}")
 
     try:
         exceptions: list[Exception] = []
-        print(f"\n{D}Testing all garden errors...{X}")
+        print("\nTesting all garden errors...")
 
         try:
             test_moisture(0)
-        except PlantError as e:
-            exceptions.append(e)
+        except PlantError as error_message:
+            exceptions = exceptions + [error_message]
         try:
             test_water(0)
-        except WaterError as e:
-            exceptions.append(e)
+        except WaterError as error_message:
+            exceptions = exceptions + [error_message]
 
-        if len(exceptions) > 0:
-            raise GardenError(*exceptions)
-    except GardenError as e:
-        for exception in e.args:
-            print(f"{R}Caught a garden error: {str(exception)}{X}")
-    print(f"{G}\nAll custom error types work correctly!{X}")
+        raise GardenError(*exceptions)
+    except GardenError as error_message:
+        for exception in error_message.args:
+            print(f"Caught a garden error: {exception}")
+    print(f"\nAll custom error types work correctly!")
 
 
 test_errors()

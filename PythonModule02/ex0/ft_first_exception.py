@@ -1,17 +1,5 @@
 #!/usr/bin/env python3
 
-
-X = "\033[0m"
-R = "\033[91m"
-G = "\033[92m"
-B = "\033[94m"
-C = "\033[96m"
-M = "\033[95m"
-Y = "\033[93m"
-D = "\033[2m"
-H = "\033[1m"
-
-
 def check_temperature(temp_str: str) -> int:
     """Returns the temperature, or a negative number on any error.
 
@@ -23,16 +11,16 @@ def check_temperature(temp_str: str) -> int:
     try:
         t = int(temp_str)
         if t > 40:
-            print(f"{R}Error: '{temp_str}' "
-                  f"is too hot for plants (max 40°C){X}")
+            print(f"Error: '{temp_str}' "
+                  f"is too hot for plants (max 40°C)")
             return -2
         if t < 0:
-            print(f"{R}Error: '{temp_str}' "
-                  f"is too cold for plants (min 0°C){X}")
+            print(f"Error: '{temp_str}' "
+                  f"is too cold for plants (min 0°C)")
             return -3
     except ValueError:
-        print(f"{R}Error: '{temp_str}' "
-              f"is not a valid number{X}")
+        print(f"Error: '{temp_str}' "
+              f"is not a valid number")
     return t
 
 
@@ -47,7 +35,7 @@ def test_temperature_input():
             or not check_bad \
             or not check_toohot \
             or not check_toocold:
-        t = check_temperature(input(f"{H}\nTesting temperature: {X}"))
+        t = check_temperature(input("\nTesting temperature: "))
         match t:
             case -1:
                 check_bad = True
@@ -56,9 +44,9 @@ def test_temperature_input():
             case -3:
                 check_toocold = True
             case _:
-                print(f"Temperature {t}°C is perfect for plants!")
+                print("Temperature °C is perfect for plants!")
                 check_good = True
-    print(f"{G}\nAll tests completed - program didn't crash!{X}")
+    print("\nAll tests completed - program didn't crash!")
 
 
 test_temperature_input()

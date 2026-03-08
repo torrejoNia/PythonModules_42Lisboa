@@ -1,17 +1,6 @@
 #!/usr/bin/env python3
 
 
-X = "\033[0m"
-R = "\033[91m"
-G = "\033[92m"
-B = "\033[94m"
-C = "\033[96m"
-M = "\033[95m"
-Y = "\033[93m"
-D = "\033[2m"
-H = "\033[1m"
-
-
 def garden_operations(exception):
     if exception is ValueError:
         i = int("abc")
@@ -20,44 +9,45 @@ def garden_operations(exception):
         n = 1 / 0
         print(n)
     if exception is FileNotFoundError:
-        kaas = open("kaas.txt")
-        kaas.close()
+        missing = open("missing.txt")
+        missing.close()
     if exception is KeyError:
-        d = {"a": 5, "b": 10}
-        i = d["c"]
+        d = {"rose": 5, "b": 10}
+        i = d["missing_plant"]
         print(i)
 
 
 def test_error_types():
     print("=== Garden Error Types Demo ===")
     try:
-        print(f"{D}\nTesting ValueError...{X}")
+        print("\nTesting ValueError...")
         garden_operations(ValueError)
-    except ValueError as e:
-        print(f"{R}Caught ValueError: {str(e)}{X}")
+    except ValueError as error_message:
+        print(f"Caught ValueError: {error_message}")
     try:
-        print(f"{D}\nTesting ZeroDivisionError...{X}")
+        print("\nTesting ZeroDivisionError...")
         garden_operations(ZeroDivisionError)
-    except ZeroDivisionError as e:
-        print(f"{R}Caught ZeroDivisionError: {str(e)}{X}")
+    except ZeroDivisionError as error_message:
+        print(f"Caught ZeroDivisionError: {error_message}")
     try:
-        print(f"{D}\nTesting FileNotFoundError...{X}")
+        print("\nTesting FileNotFoundError...")
         garden_operations(FileNotFoundError)
-    except FileNotFoundError as e:
-        print(f"{R}Caught FileNotFoundError: {str(e)}{X}")
+    except FileNotFoundError as error_message:
+        print(f"Caught FileNotFoundError: {error_message}")
     try:
-        print(f"{D}\nTesting KeyError...{X}")
+        print("\nTesting KeyError...")
         garden_operations(KeyError)
-    except KeyError as e:
-        print(f"{R}Caught KeyError: {str(e)}{X}")
+    except KeyError as error_message:
+        print(f"Caught KeyError: {error_message}")
 
-    print(f"{D}\nTesting multiple errors together...{X}")
+    print("\nTesting multiple errors together...")
     try:
-        n = 1 / int(input(f"{H}What to divide 1 by? "
-                          f"(divide by 0 or string) {X}"))
+        n = 1 / int(input("What to divide 1 by? "
+                          "(divide by 0 or string) "))
         print(n)
     except (ValueError, ZeroDivisionError):
-        print(f"{G}\nCaught an error, but program continues!{X}")
+        print("\nCaught an error, but program continues!")
+        print("\nAll error types tested successfully!")
 
 
 test_error_types()
