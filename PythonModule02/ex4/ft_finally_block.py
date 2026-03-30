@@ -1,32 +1,57 @@
 #!/usr/bin/env python3
 
-
-X = "\033[0m"
-R = "\033[91m"
-G = "\033[92m"
-B = "\033[94m"
-C = "\033[96m"
-M = "\033[95m"
-Y = "\033[93m"
-D = "\033[2m"
+class GardenError(Exception):
+    pass
 
 
-def water_plants(plant_list: list[str]):
-    print(f"{C}Opening watering system{X}")
+class PlantError(GardenError):
+    pass
+
+
+def water_plant(plant_name: str) -> None:
+    if plant_name != str.capitalize(plant_name):
+        raise PlantError(f"Invalid plant name to water: '{plant_name}'")
+    print(f"Watering {plant_name}: [OK]")
+
+
+def test_watering_system() -> None:
+    print("=== Garden Watering System ===")
+    print()
+
+    print("Testing valid plants...")
     try:
-        for plant in plant_list:
-            print("Watering " + plant)
-    except TypeError:
-        print(f"{R}Error: can't water {plant} - invalid plant!{X}")
+        print("Opening watering system")
+        valid_plants = ["Tomato", "Lettuce", "Carrots"]
+
+        for plant in valid_plants:
+            water_plant(plant)
+
+    except PlantError as error_message:
+        print(f"Caught PlantError: {error_message}")
+        print(".. ending tests and returning to main")
+
     finally:
-        print(f"{B}Closing watering system{X}")
+        print("Closing watering system")
+
+    print()
+    print("Testing invalid plants...")
+    try:
+        print("Opening watering system")
+        invalid_plants = ["Tomato", "lettuce", "carrots"]
+
+        for plant in invalid_plants:
+            water_plant(plant)
+
+    except PlantError as error_message:
+        print(f"Caught PlantError: {error_message}")
+        print(".. ending tests and returning to main")
+
+    finally:
+        print("Closing watering system")
+
+    print()
+    print("Cleanup always happens, even with errors!")
 
 
-def test_watering_system():
-    print(f"{D}\nTesting normal watering...\n{X}")
-    water_plants(["tomato", "lettuce", "carrots"])
-    print(f"{D}\nTesting with error...\n{X}")
-    water_plants(["tomato", None, "carrots"])
-
-
-test_watering_system()
+if __name__ == "__main__":
+    test_watering_system()

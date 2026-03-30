@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 def input_temperature(temp_str: str) -> int:
     """Returns the temperature, or raises an error.
     """
@@ -15,9 +17,10 @@ def input_temperature(temp_str: str) -> int:
     return t
 
 
-def test_temperature_input() -> None:
+def test_temperature() -> None:
     """Takes input from the user and checks if it is a correct temperature."""
     print("=== Garden Temperature Checker ===")
+    print()
 
     tests = ["25", "abc", "100", "-50"]
 
@@ -25,11 +28,12 @@ def test_temperature_input() -> None:
         try:
             print(f"Input data is '{temp}'")
             t = input_temperature(temp)
-            print(f"Temperature is now {t}°C")
+            print(f"Temperature is now {t}°C\n")
         except ValueError as e:
-            print(f"Caught input_temperature error: {e}")
+            print(f"Caught input_temperature error: {e}\n")
 
     print("All tests completed - program didn't crash!")
 
+
 if __name__ == "__main__":
-    test_temperature_input()
+    test_temperature()

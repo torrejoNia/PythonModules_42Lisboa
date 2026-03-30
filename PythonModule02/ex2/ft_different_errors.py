@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-
-def garden_operations(operation_number)-> None:
+def garden_operations(operation_number) -> None:
     if operation_number == 0:
         i = int("abc")
         print(i)
@@ -14,10 +13,9 @@ def garden_operations(operation_number)-> None:
     if operation_number == 3:
         num = "5" + 2
         print(num)
-        print(i)
 
 
-def test_error_types()-> None:
+def test_error_types() -> None:
     print("=== Garden Error Types Demo ===")
     try:
         print("\nTesting operation 0...")
@@ -45,13 +43,14 @@ def test_error_types()-> None:
         print(n)
     except (ValueError, ZeroDivisionError):
         print("Caught ValueError and ZeroDivisionError")
-    
+
     print("\nTesting operation 4...")
     garden_operations(4)
     print("Operation completed successfully")
 
     print()
     print("All error types tested successfully!")
+
 
 if __name__ == "__main__":
     test_error_types()

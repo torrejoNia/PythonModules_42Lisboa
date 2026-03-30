@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-
 class GardenError(Exception):
-    pass
+    def __str__(self):
+        return "Unknown plant error"
 
 
 class PlantError(GardenError):
@@ -15,19 +15,19 @@ class WaterError(GardenError):
         return "Not enough water in the tank!"
 
 
-def test_moisture(moisture):
+def test_moisture(moisture: int) -> None:
     if moisture < 1:
         raise PlantError()
     print("Plant OK!")
 
 
-def test_water(water):
+def test_water(water: int) -> None:
     if water < 1:
         raise WaterError()
     print("Water OK!")
 
 
-def test_errors():
+def test_errors() -> None:
     try:
         print("\nTesting PlantError...")
         test_moisture(0)
@@ -35,14 +35,14 @@ def test_errors():
         print(f"Caught PlantError: {error_message}")
 
     try:
-        print(f"\nTesting WaterError...")
+        print("\nTesting WaterError...")
         test_water(0)
     except WaterError as error_message:
         print(f"Caught WaterError: {error_message}")
 
     try:
         exceptions: list[Exception] = []
-        print("\nTesting all garden errors...")
+        print("\nTesting catching all garden errors...")
 
         try:
             test_moisture(0)
@@ -56,8 +56,9 @@ def test_errors():
         raise GardenError(*exceptions)
     except GardenError as error_message:
         for exception in error_message.args:
-            print(f"Caught a garden error: {exception}")
-    print(f"\nAll custom error types work correctly!")
+            print(f"Caught a GardenError: {exception}")
+    print("\nAll custom error types work correctly!")
 
 
-test_errors()
+if __name__ == "__main__":
+    test_errors()
