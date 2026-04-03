@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
+
 
 print("\n=== CYBER ARCHIVES - DATA RECOVERY SYSTEM ===")
-print("Accessing storage vault: \"ancient_fragment.txt\"")
+print("Accessing storage vault: ancient_fragment.txt")
 try:
     f = open("ancient_fragment.txt")
     print("Connection established.")
