@@ -2,7 +2,6 @@
 """Data stream router using abstract data processors."""
 
 from abc import ABC, abstractmethod
-from collections import deque
 from typing import Any
 
 
@@ -10,7 +9,7 @@ class DataProcessor(ABC):
     """Common processor interface used by the stream router."""
 
     def __init__(self) -> None:
-        self._data: deque[str] = deque()
+        self._data: list[str] = []
         self._output_count: int = 0
 
     @abstractmethod
@@ -25,7 +24,7 @@ class DataProcessor(ABC):
         """Return oldest stored value with rank, then remove it."""
         if not self._data:
             raise ValueError("No data to extract from processor")
-        value = self._data.popleft()
+        value = self._data.pop(0)
         rank = self._output_count
         self._output_count += 1
         return rank, value
@@ -166,13 +165,12 @@ def _consume_values(label: str, processor: DataProcessor, amount: int) -> None:
     consumed = 0
     while consumed < amount and processor.pending_count() > 0:
         rank, value = processor.output()
-        print(f"{label} value {rank}: {value}")
         consumed += 1
 
 
 def main() -> None:
     """Demonstrate stream processing with progressive registration."""
-    print("=== Code Nexus - Data Stream ===")
+    print("=== Code Nexus - Data Stream ===\n")
     print("Initialize Data Stream...")
 
     stream = DataStream()
@@ -199,13 +197,13 @@ def main() -> None:
         ["Hi", "five"],
     ]
 
-    print("Registering Numeric Processor")
+    print("\nRegistering Numeric Processor")
     stream.register_processor(numeric)
-    print(f"Send first batch of data on stream: {batch}")
+    print(f"\nSend first batch of data on stream: {batch}")
     stream.process_stream(batch)
     stream.print_processors_stats()
 
-    print("Registering other data processors")
+    print("\nRegistering other data processors")
     stream.register_processor(text)
     stream.register_processor(logs)
     print("Send the same batch again")
@@ -213,7 +211,7 @@ def main() -> None:
     stream.print_processors_stats()
 
     print(
-        "Consume some elements from the data processors: "
+        "\nConsume some elements from the data processors: "
         "Numeric 3, Text 2, Log 1"
     )
     _consume_values("Numeric", numeric, 3)

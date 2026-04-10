@@ -2,7 +2,6 @@
 """Complete data pipeline with stream routing and export plugins."""
 
 from abc import ABC, abstractmethod
-from collections import deque
 from typing import Any, Protocol
 
 
@@ -10,7 +9,7 @@ class DataProcessor(ABC):
     """Common processor interface used by the stream router."""
 
     def __init__(self) -> None:
-        self._data: deque[str] = deque()
+        self._data: list[str] = []
         self._output_count: int = 0
 
     @abstractmethod
@@ -25,7 +24,7 @@ class DataProcessor(ABC):
         """Return oldest stored value with rank, then remove it."""
         if not self._data:
             raise ValueError("No data to extract from processor")
-        value = self._data.popleft()
+        value = self._data.pop(0)
         rank = self._output_count
         self._output_count += 1
         return rank, value
@@ -216,15 +215,23 @@ class DataStream:
         return False
 
 
+def _consume_values(label: str, processor: DataProcessor, amount: int) -> None:
+    """Consume up to amount values from processor and print each one."""
+    consumed = 0
+    while consumed < amount and processor.pending_count() > 0:
+        rank, value = processor.output()
+        consumed += 1
+
+
 def main() -> None:
     """Demonstrate complete pipeline: stream routing then plugin exports."""
-    print("=== Code Nexus - Data Pipeline ===")
-    print("Initialize Data Stream...")
+    print("=== Code Nexus - Data Pipeline ===\n")
+    print("Initialize Data Stream...\n")
 
     stream = DataStream()
     stream.print_processors_stats()
 
-    print("Registering Processors")
+    print("\nRegistering Processors\n")
     stream.register_processor(NumericProcessor())
     stream.register_processor(TextProcessor())
     stream.register_processor(LogProcessor())
@@ -246,12 +253,13 @@ def main() -> None:
         ["Hi", "five"],
     ]
 
-    print(f"Send first batch of data on stream: {first_batch}")
+    print(f"Send first batch of data on stream: {first_batch}\n")
     stream.process_stream(first_batch)
     stream.print_processors_stats()
 
-    print("Send 3 processed data from each processor to a CSV plugin:")
+    print("\nSend 3 processed data from each processor to a CSV plugin:")
     stream.output_pipeline(3, CSVExportPlugin())
+    print()
     stream.print_processors_stats()
 
     second_batch: list[Any] = [
@@ -271,12 +279,13 @@ def main() -> None:
         "World hello",
     ]
 
-    print(f"Send another batch of data: {second_batch}")
+    print(f"\nSend another batch of data: {second_batch}\n")
     stream.process_stream(second_batch)
     stream.print_processors_stats()
 
-    print("Send 5 processed data from each processor to a JSON plugin:")
+    print("\nSend 5 processed data from each processor to a JSON plugin:")
     stream.output_pipeline(5, JSONExportPlugin())
+    print()
     stream.print_processors_stats()
 
 

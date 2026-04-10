@@ -2,7 +2,6 @@
 """ABC architecture for specialized data processors."""
 
 from abc import ABC, abstractmethod
-from collections import deque
 from typing import Any
 
 
@@ -11,7 +10,7 @@ class DataProcessor(ABC):
 
     def __init__(self) -> None:
         """Initialize internal queue and extraction rank state."""
-        self._data: deque[str] = deque()
+        self._data: list[str] = []
         self._output_count: int = 0
 
     @abstractmethod
@@ -26,7 +25,7 @@ class DataProcessor(ABC):
         """Extract oldest stored item with its extraction rank."""
         if not self._data:
             raise ValueError("No data to extract from processor")
-        data_value = self._data.popleft()
+        data_value = self._data.pop(0)
         rank = self._output_count
         self._output_count += 1
         return rank, data_value
@@ -115,7 +114,7 @@ class LogProcessor(DataProcessor):
 
 def main() -> None:
     """Demonstrate processor validation, ingestion and output extraction."""
-    print("=== Code Nexus - Data Processor ===")
+    print("=== Code Nexus - Data Processor ===\n")
     # Test NumericProcessor
     print("Testing Numeric Processor...")
     num_processor = NumericProcessor()
@@ -137,7 +136,7 @@ def main() -> None:
         print(f"Numeric value {i}: {value}")
 
     # Test TextProcessor
-    print("Testing Text Processor...")
+    print("\nTesting Text Processor...")
     text_processor = TextProcessor()
     print(f"Trying to validate input '42': {text_processor.validate(42)}")
     print("Processing data: ['Hello', 'Nexus', 'World']")
@@ -146,7 +145,7 @@ def main() -> None:
     rank, value = text_processor.output()
     print(f"Text value {rank}: {value}")
     # Test LogProcessor
-    print("Testing Log Processor...")
+    print("\nTesting Log Processor...")
     log_processor = LogProcessor()
     print(
         "Trying to validate input 'Hello': "
