@@ -8,5 +8,6 @@ def main() -> None:
     fire = elements.create_fire()
     print(f"Testing create_fire: {fire}")
 
+
 if __name__ == "__main__":
     main()

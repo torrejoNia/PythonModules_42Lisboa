@@ -8,5 +8,6 @@ def main() -> None:
     earth = alchemy.elements.create_earth()
     print(f"Testing create_fire: {earth}")
 
+
 if __name__ == "__main__":
     main()

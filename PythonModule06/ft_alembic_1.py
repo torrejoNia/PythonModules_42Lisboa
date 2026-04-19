@@ -8,5 +8,6 @@ def main() -> None:
     water = create_water()
     print(f"Testing create_fire: {water}")
 
+
 if __name__ == "__main__":
     main()
