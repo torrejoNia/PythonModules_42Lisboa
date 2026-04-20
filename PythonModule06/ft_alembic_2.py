@@ -3,10 +3,11 @@ import alchemy.elements
 
 def main() -> None:
     print("=== Alembic 2 ===")
-    print("Using: 'import ...' structure to access elements.py")
+    print("Accessing alchemy/elements.py using"
+          " 'import ...' structure")
 
     earth = alchemy.elements.create_earth()
-    print(f"Testing create_fire: {earth}")
+    print(f"Testing create_earth: {earth}")
 
 
 if __name__ == "__main__":

@@ -3,10 +3,11 @@ from alchemy.elements import create_air
 
 def main() -> None:
     print("=== Alembic 3 ===")
-    print("Using: 'import ...' structure to access elements.py")
+    print("Accessing alchemy/elements.py using"
+          " 'from ... import ...' structure")
 
     air = create_air()
-    print(f"Testing create_fire: {air}")
+    print(f"Testing create_air: {air}")
 
 
 if __name__ == "__main__":
