@@ -1,4 +1,4 @@
-from .basic import lead_to_gold
+from .recipes import lead_to_gold
 from ..potions import healing_potion
 
 
