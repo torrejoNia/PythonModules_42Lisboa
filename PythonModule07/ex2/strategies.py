@@ -1,5 +1,3 @@
-"""Battle strategy implementations for ex2."""
-
 from abc import ABC, abstractmethod
 from typing import List
 

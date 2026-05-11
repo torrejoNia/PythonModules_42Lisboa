@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Tournament runner using battle strategies (ex2)."""
 
-from typing import List, Tuple
+from typing import Tuple
+from collections.abc import Sequence
 
 from ex0 import FlameFactory, AquaFactory
 from ex1 import HealingCreatureFactory, TransformCreatureFactory
@@ -10,21 +11,32 @@ from ex2 import (
     AggressiveStrategy,
     DefensiveStrategy,
     InvalidStrategyError,
+    BattleStrategy
 )
-from ex2.strategies import BattleStrategy
 
 
 Opponent = Tuple[object, BattleStrategy]
 
 
-def run_tournament(name: str, opponents: List[Opponent]) -> None:
+def run_tournament(
+    name: str,
+    opponents: Sequence[tuple[object, BattleStrategy]],
+) -> None:
     print(f"Tournament {name}")
+    name_map = {
+        "Sproutling": "Healing",
+        "Bloomelle": "Healing",
+        "Shiftling": "Transform",
+        "Morphagon": "Transform",
+    }
+
     brief = ", ".join(
         (
-            f"({getattr(fac.create_base(), 'name', '?')}+"
-            f"{type(strat).__name__.replace('Strategy', '')})"
+            f"({name_map.get(name, name)}"
+            f"+{type(strat).__name__.replace('Strategy', '')})"
         )
         for fac, strat in opponents
+        for name in [getattr(fac.create_base(), "name", "?")]
     )
     print(f"[ {brief} ]")
     print("*** Tournament ***")

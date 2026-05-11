@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
-"""Battle script for testing the ex0 creature factory system."""
 
-from ex0 import AquaFactory, FlameFactory
-from ex0.creatures import CreatureFactory
+from ex0 import CreatureFactory, AquaFactory, FlameFactory
 
 
 def test_factory(factory: CreatureFactory) -> None:

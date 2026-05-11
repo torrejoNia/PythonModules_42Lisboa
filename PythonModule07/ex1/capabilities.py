@@ -7,6 +7,7 @@ class HealCapability(ABC):
     @abstractmethod
     def heal(self) -> str:
         """Return the healing action description."""
+        pass
 
 
 class TransformCapability(ABC):
@@ -15,7 +16,9 @@ class TransformCapability(ABC):
     @abstractmethod
     def transform(self) -> str:
         """Return the transform action description."""
+        pass
 
     @abstractmethod
     def revert(self) -> str:
         """Return the revert action description."""
+        pass
